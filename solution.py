@@ -1,4 +1,4 @@
-# import itertools
+#import itertools
 assignments = []
 rows = 'ABCDEFGHI'
 cols = '123456789'
@@ -43,16 +43,12 @@ def naked_twins(values):
         if len(naked_twins) == 0:
             return values
         
-        for a,b in naked_twins:
-            first_digit = values[a][0]
-            second_digit = values[a][1]
-            
-            shared_peers = list(peers[a] & peers[b])
-            for peer in shared_peers:
-                if first_digit in values[peer] and peer != a and peer != b:
-                    values[peer] = values[peer].replace(first_digit, '')
-                if second_digit in values[peer] and peer != a and peer != b:
-                    values[peer] = values[peer].replace(second_digit, '')
+        for twin1, twin2 in naked_twins:            
+            common_peers = list(set(peers[twin1] & peers[twin2]))
+            for digits in values[twin1]:
+                for peer in common_peers:
+                    if digits in values[peer] and peer != twin1 and peer != twin2:
+                        values[peer] = values[peer].replace(digit, '')
         board_after = values
         no_more_twins = board_before == board_after
     return values
