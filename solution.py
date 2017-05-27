@@ -64,7 +64,7 @@ def cross(A, B):
 
 boxes = cross(rows, cols) # One box having one value
 row_units = [cross(r,cols) for r in rows]
-column_units = [cross(c, rows) for c in cols]
+column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs,cs) for rs in ('ABC','DEF','GHI') for cs in ('123', '456', '789')]
 # For diagonal sudoku
 # diagonal_units = [[rows[i] + cols[i] for i in range(9)], [rows[::-1][i] + cols[i] for i in range(9)]]
@@ -166,7 +166,7 @@ def reduce_puzzle(values):
         # Stopping the loop if no new values were added
         stalled = solved_values_before == solved_values_after
         # Sanity check: return False if there is a box with zero available values
-        if len(box for box in values.keys() if len(values[box]) == 0):
+        if len([box for box in values.keys() if len(values[box]) == 0]):
             return False      
         print(values)
     return values
